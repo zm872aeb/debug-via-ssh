@@ -125,27 +125,37 @@ runs:
 
         while [ ! -e $continue_path ] && [ $time -gt 1 ]
         do
-          echo ""
-          echo "#################"
-          echo "# Connect to this runner using:"
-          echo "#########################################"
-          echo $ssh_string
-          echo "#########################################"
-          echo "#"
-          echo "# Allow workflow to continue using:"
-          echo "#########################################"
-          echo "bash -c \"touch $continue_path\""
-          echo "#########################################"
-          echo "#"
-          echo "# SSH session time left:"
-          echo "########################################"
-          printf '#%-14s%dh:%02dm:%02ds%-14s#\n' '' $(($time/3600)) $(($time%3600/60)) $(($time%60)) ''
-          echo "########################################"
-          echo ""
+
+          while [ ! -e $continue_path ] && [ $time -gt 1 ]
+          do
+            echo ""
+            echo "#################"
+            echo "# Connect to this runner using:"
+            echo "#########################################"
+            echo $ssh_string
+            echo "#########################################"
+            echo "#"
+            echo "# Allow workflow to continue using:"
+            echo "#########################################"
+            echo "bash -c \"touch $continue_path\""
+            echo "#########################################"
+            echo "#"
+            echo "# SSH session time left:"
+            echo "########################################"
+            printf '#%-14s%dh:%02dm:%02ds%-14s#\n' '' $(($time/3600)) $(($time%3600/60)) $(($time%60)) ''
+            echo "########################################"
+            echo ""            
+            sleep 5
+            time=$((time-60))
+            for num in {1..50}  
+            do  
+              sleep 1 
+            done
+          done
           
-          sleep 60
-          time=$((time-60))
+          echo "get end"
         done
+
 
         echo "# SSH session terminated. Allowing workflow to continue..."
       shell: bash
