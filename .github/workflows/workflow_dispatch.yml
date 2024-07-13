@@ -18,8 +18,7 @@ jobs:
       run: |
         printf "# Preparing environment..."
           whoami > ssh_user
-          echo $ssh_user        
-        shell: bash
+          echo $ssh_user
     - name: Start Cloudflared
       run: |
         echo "# Install Cloudflared"
@@ -38,4 +37,3 @@ jobs:
         echo 'Session ended'
 
         kill "$cloudflared_pid"
-        shell: bash
