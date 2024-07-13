@@ -15,17 +15,15 @@ jobs:
     name: Start the SSH session
     steps:
     - name: Start SSH session
-      #uses: luchihoratiu/debug-via-ssh@main
-      #with:
-      #  NGROK_AUTH_TOKEN: ${{ github.event.inputs.token }}
-      #  SSH_PASS: ${{ secrets.SSH_PASS }}
       run: |
         printf "# Preparing environment..."
           whoami > ssh_user
+          echo $ssh_user
+        printf " [DONE]\n\n"        
+        echo "# Change the SSH user password"
+          echo "${{ secrets.SSH_PASS }}`n${{ secrets.SSH_PASS }}" | sudo passwd $(cat ssh_user)
         printf " [DONE]\n\n"
         
-        echo "# Change the SSH user password"
-        echo "${{ secrets.SSH_PASS }}`n${{ secrets.SSH_PASS }}" | sudo passwd $(cat ssh_user)
         shell: pwsh
 
     - name: Start Cloudflared
