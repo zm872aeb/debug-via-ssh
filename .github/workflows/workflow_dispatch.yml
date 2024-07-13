@@ -18,14 +18,8 @@ jobs:
       run: |
         printf "# Preparing environment..."
           whoami > ssh_user
-          echo $ssh_user
-        printf " [DONE]\n\n"        
-        echo "# Change the SSH user password"
-          echo "${{ secrets.SSH_PASS }}`n${{ secrets.SSH_PASS }}" | sudo passwd $(cat ssh_user)
-        printf " [DONE]\n\n"
-        
-        shell: pwsh
-
+          echo $ssh_user        
+        shell: bash
     - name: Start Cloudflared
       run: |
         echo "# Install Cloudflared"
